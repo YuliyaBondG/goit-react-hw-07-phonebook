@@ -1,13 +1,13 @@
 import css from './ContactForm.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { getContacts } from 'redux/selectors';
+import { selectContacts } from 'redux/selectors';
 import { nanoid } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
-import { addContact } from 'redux/contactsSlice';
+import { addContact } from 'redux/operations';
 
 export const ContactForm = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(getContacts);
+  const contacts = useSelector(selectContacts);
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -23,7 +23,7 @@ export const ContactForm = () => {
     );
 
     if (isExist) {
-      return toast.console.warn(`%{contact.name} is already in contacts`);
+      return toast.console.warn(`${contact.name} is already in contacts`);
     }
     dispatch(addContact(contact));
     event.currentTarget.reset();
